@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Panel - JSON Control</title>
+<style>
+    body { font-family: Arial, sans-serif; background: #f2f2f2; margin: 0; padding: 0; }
+    .container { max-width: 600px; margin: 50px auto; background: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+    h2 { text-align: center; }
+    label { display: block; margin-top: 15px; font-weight: bold; }
+    input, select { width: 100%; padding: 8px; margin-top: 5px; border-radius: 5px; border: 1px solid #ccc; }
+    button { margin-top: 20px; padding: 10px 20px; border: none; border-radius: 5px; background: #4CAF50; color: #fff; cursor: pointer; width: 100%; font-size: 16px; }
+    button:hover { background: #45a049; }
+    .login { margin-bottom: 20px; }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Admin Panel Login</h2>
+    <div class="login">
+        <label>Username:</label>
+        <input type="text" id="adminUser" placeholder="Enter username">
+        <label>Password:</label>
+        <input type="password" id="adminPass" placeholder="Enter password">
+        <button onclick="login()">Login</button>
+    </div>
+
+    <div id="panel" style="display:none;">
+        <h2>Control JSON: data.json</h2>
+        <label>WebView On/Off:</label>
+        <select id="load"><option value="true">ON</option><option value="false">OFF</option></select>
+
+        <label>Main URL:</label>
+        <input type="text" id="url" value="https://google.com">
+
+        <label>Toast On/Off:</label>
+        <select id="toast"><option value="true">ON</option><option value="false">OFF</option></select>
+        <label>Toast Message:</label>
+        <input type="text" id="toastMessage" value="Page loaded successfully!">
+
+        <label>Dialog On/Off:</label>
+        <select id="dialog"><option value="true">ON</option><option value="false">OFF</option></select>
+        <label>Dialog Title:</label>
+        <input type="text" id="dialogTitle" value="Welcome!">
+        <label>Dialog Message:</label>
+        <input type="text" id="dialogMessage" value="Dynamic dialog content.">
+        <label>Button 1 Text:</label>
+        <input type="text" id="btn1Text" value="OK">
+        <label>Button 1 Action:</label>
+        <input type="text" id="btn1Action" value="https://example.com/ok">
+        <label>Button 2 Text:</label>
+        <input type="text" id="btn2Text" value="Cancel">
+        <label>Button 2 Action:</label>
+        <input type="text" id="btn2Action" value="close">
+
+        <button onclick="saveJson()">Save JSON</button>
+        <p id="status" style="margin-top:10px;color:green;"></p>
+    </div>
+</div>
+
+<script>
+// Simple login (replace username/password as needed)
+function login() {
+    var user = document.getElementById("adminUser").value;
+    var pass = document.getElementById("adminPass").value;
+    if(user === "admin" && pass === "1234"){
+        document.getElementById("panel").style.display = "block";
+        document.querySelector(".login").style.display = "none";
+    } else {
+        alert("Invalid credentials");
+    }
+}
+
+// Save JSON (downloads locally, you can later upload to server)
+function saveJson() {
+    var data = {
+        load: document.getElementById("load").value === "true",
+        url: document.getElementById("url").value,
+        toast: document.getElementById("toast").value === "true",
+        toastMessage: document.getElementById("toastMessage").value,
+        dialog: document.getElementById("dialog").value === "true",
+        dialogObj: {
+            title: document.getElementById("dialogTitle").value,
+            message: document.getElementById("dialogMessage").value,
+            button1: {
+                text: document.getElementById("btn1Text").value,
+                action: document.getElementById("btn1Action").value
+            },
+            button2: {
+                text: document.getElementById("btn2Text").value,
+                action: document.getElementById("btn2Action").value
+            }
+        }
+    };
+    var blob = new Blob([JSON.stringify(data, null, 2)], {type: "application/json"});
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = "data.json";
+    a.click();
+    document.getElementById("status").innerText = "JSON downloaded successfully!";
+}
+</script>
+
+</body>
+</html>
