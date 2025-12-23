@@ -1,6 +1,6 @@
 {
   "load": true,
-  "url": "https://example.com",
+  "url": "https://Google.com",
   "toast": true,
   "toastMessage": "Page loaded successfully!",
   "dialog": true,
