@@ -1,0 +1,19 @@
+{
+  "load": true,
+  "url": "https://example.com",
+  "toast": true,
+  "toastMessage": "Page loaded successfully!",
+  "dialog": true,
+  "dialogObj": {
+    "title": "Welcome!",
+    "message": "Dynamic dialog content.",
+    "button1": {
+      "text": "OK",
+      "action": "https://example.com/ok"
+    },
+    "button2": {
+      "text": "Cancel",
+      "action": "close"
+    }
+  }
+}
